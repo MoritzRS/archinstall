@@ -18,7 +18,7 @@ parted /dev/sda -- mkpart primary linux-swap -20GB 100%;
 parted /dev/sda -- set 1 esp on;
 
 mkfs.fat -F 32 -n boot /dev/sda1;
-mkfs.ext4 -L root /dev/sda1;
+mkfs.ext4 -L root /dev/sda2;
 mkswap -L swap /dev/sda3;
 
 mount /dev/disk/by-label/root /mnt;
