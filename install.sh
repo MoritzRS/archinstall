@@ -72,8 +72,6 @@ arch-chroot /mnt pacman -S grub-efi-x86_64 efibootmgr dosfstools os-prober mtool
 arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck;
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg;
 
-read -p "Press enter to continue";
-
 
 ########## Services ##########
 arch-chroot /mnt pacman -S --needed --noconfirm networkmanager dhcpcd acpid gnome-keyring;
@@ -82,26 +80,37 @@ arch-chroot /mnt systemctl enable dhcpcd;
 arch-chroot /mnt systemctl enable acpid;
 arch-chroot /mnt systemctl enable gnome-keyring;
 
-read -p "Press enter to continue";
-
 
 ########## Sound ##########
 arch-chroot /mnt pacman -S --needed --noconfirm pipewire
 
-read -p "Press enter to continue";
-
 
 ########## Desktop ##########
-arch-chroot /mnt pacman -S --needed --noconfirm xorg-drivers gdm gnome-shell gnome-terminal gnome-control-center gnome-tweak-tool gnome-software gnome-calendar xdg-user-dirs nautilus;
+arch-chroot /mnt pacman -S --needed --noconfirm xorg-drivers gdm gnome-shell gnome-backgrounds gnome-console gnome-control-center gnome-tweak-tool gnome-software gnome-calendar xdg-user-dirs nautilus;
 arch-chroot /mnt systemctl enable gdm;
-
-read -p "Press enter to continue";
 
 
 ########## Fonts ###########
 arch-chroot /mnt pacman -S --needed --noconfirm ttf-hack-nerd ttf-sourcecodepro-nerd ttf-terminus-nerd;
 
-read -p "Press enter to continue";
+
+########## Tools ##########
+arch-chroot /mnt pacman -S --needed --noconfirm php php-sqlite git wget neovim docker flatpak xdg-desktop-portal-gnome;
+
+# PHP
+sed -i s/\;extension=pdo_sqlite/extension=pdo_sqlite/ /mnt/etc/php/php.ini
+sed -i s/\;extension=sqlite3/extension=sqlite3/ /mnt/etc/php/php.ini
+
+# NVM
+NVM_DIR="/mnt/usr/local/nvm";
+git clone https://github.com/nvm-sh/nvm.git ${NVM_DIR};
+cd ${NVM_DIR};
+git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`;
+\. ${NVM_DIR}/nvm.sh;
+chmod 777 ${NVM_DIR};
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+nvm install 18;
 
 
 ########## Shell ##########
@@ -122,38 +131,17 @@ echo "[ -s \"$NVM_DIR/bash_completion\" ] && \. \"$NVM_DIR/bash_completion\"" >>
 echo "alias ls=\"ls --color=auto\"" >> /mnt/etc/skel/.zshrc;
 echo "source /usr/local/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> /mnt/etc/skel/.zshrc;
 echo "source /usr/local/zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> /mnt/etc/skel/.zshrc;
-echo "eval \"$(starship init zsh)\"" >> /mnt/etc/skel/.zshrc;
-
-read -p "Press enter to continue";
-
-
-########## Tools ##########
-arch-chroot /mnt pacman -S --needed --noconfirm php php-sqlite git wget neovim docker flatpak xdg-desktop-portal-gnome;
-
-# PHP
-sed -i s/\;extension=pdo_sqlite/extension=pdo_sqlite/ /mnt/etc/php/php.ini
-sed -i s/\;extension=sqlite3/extension=sqlite3/ /mnt/etc/php/php.ini
-
-# NVM
-local NVM_DIR="/mnt/usr/local/nvm";
-git clone https://github.com/nvm-sh/nvm.git ${NVM_DIR};
-cd ${NVM_DIR};
-git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`;
-\. ${NVM_DIR}/nvm.sh;
-chmod 777 ${NVM_DIR};
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-nvm install 18;
-
-read -p "Press enter to continue";
+echo "eval \"\$(starship init zsh)\"" >> /mnt/etc/skel/.zshrc;
 
 
 ########## User ##########
 mkdir -p /mnt/etc/skel/{Bilder,Dev,Dokumente,Downloads,Musik,Videos}
-arch-chroot /mnt pacman -S --needed --noconfirm sudo;
-arch-chroot /mnt useradd -m -g users -G wheel,storage,disk,power,audio,video,docker -s /usr/bin/zsh mrs;
-arch-chroot /mnt echo -e "1234\n1234" | passwd;
-arch-chroot /mnt echo -e "1234\n1234" | passwd mrs;
+arch-chroot /mnt bash <<SHELL
+pacman -S --needed --noconfirm sudo;
+useradd -m -g users -G wheel,storage,disk,power,audio,video,docker -s /usr/bin/zsh mrs;
+echo -e "1234\n1234" | passwd;
+echo -e "1234\n1234" | passwd mrs;
+SHELL
 echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/10-installer;
 
 ########## Finish ##########
