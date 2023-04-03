@@ -13,13 +13,13 @@ git config --global user.email moritz.r.schulz@gmail.com
 dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'";
 dconf write /org/gnome/desktop/interface/enable-hot-corners false;
 
-dconf write /org/gnome/desktop/interface/font-name = "'JetBrainsMono Nerd Font 11'";
-dconf write /org/gnome/desktop/interface/monospace-font-name = "'JetBrainsMono Nerd Font Mono 10'";
-dconf write /org/gnome/desktop/interface/document-font-name = "'JetBrainsMono Nerd Font 11'";
+dconf write /org/gnome/desktop/interface/font-name "'JetBrainsMono Nerd Font 11'";
+dconf write /org/gnome/desktop/interface/monospace-font-name "'JetBrainsMono Nerd Font Mono 10'";
+dconf write /org/gnome/desktop/interface/document-font-name "'JetBrainsMono Nerd Font 11'";
 
-dconf write /org/gnome/desktop/background/picture-uri = "'file:///usr/share/backgrounds/gnome/blobs-l.svg'";
-dconf write /org/gnome/desktop/background/picture-uri-dark = "'file:///usr/share/backgrounds/gnome/blobs-d.svg'";
-dconf write /org/gnome/desktop/screensaver/picture-uri = "'file:///usr/share/backgrounds/gnome/blobs-d.svg'";
+dconf write /org/gnome/desktop/background/picture-uri "'file:///usr/share/backgrounds/gnome/blobs-l.svg'";
+dconf write /org/gnome/desktop/background/picture-uri-dark "'file:///usr/share/backgrounds/gnome/blobs-d.svg'";
+dconf write /org/gnome/desktop/screensaver/picture-uri "'file:///usr/share/backgrounds/gnome/blobs-d.svg'";
 
 
 ########## Update System ##########
