@@ -83,6 +83,9 @@ arch-chroot /mnt pacman -S --needed --noconfirm ttf-hack-nerd ttf-sourcecodepro-
 ########## Tools ##########
 arch-chroot /mnt pacman -S --needed --noconfirm php php-sqlite git wget neovim docker flatpak xdg-desktop-portal-gnome;
 
+# Docker
+arch-chroot /mnt systemctl enable docker;
+
 # PHP
 sed -i s/\;extension=pdo_sqlite/extension=pdo_sqlite/ /mnt/etc/php/php.ini
 sed -i s/\;extension=sqlite3/extension=sqlite3/ /mnt/etc/php/php.ini
@@ -127,10 +130,11 @@ mkdir -p /mnt/etc/skel/{Bilder,Dev,Dokumente,Downloads,Musik,Videos}
 arch-chroot /mnt bash <<SHELL
 pacman -S --needed --noconfirm sudo;
 useradd -m -g users -G wheel,storage,disk,power,audio,video,docker -s /usr/bin/zsh mrs;
+usermod -c "MoritzRS" mrs;
 echo -e "1234\n1234" | passwd;
 echo -e "1234\n1234" | passwd mrs;
 SHELL
 echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/10-installer;
 
 ########## Finish ##########
-# shutdown now;
+shutdown now;
