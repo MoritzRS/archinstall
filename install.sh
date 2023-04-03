@@ -8,7 +8,7 @@ reflector \
     --sort rate \
     --country Austria,France,Germany,Switzerland \
     --save /etc/pacman.d/mirrorlist;
-pacman -Syy --needed --noconfirm git wget unzip;
+pacman -Syy --needed --noconfirm parted git wget unzip;
 
 ########## Disk Setup ##########
 parted /dev/sda -- mklabel gpt;
@@ -18,10 +18,10 @@ parted /dev/sda -- mkpart primary linux-swap -20GB 100%;
 parted /dev/sda -- set 1 esp on;
 
 mkfs.fat -F 32 -n boot /dev/sda1;
-mkfs.ext4 -L nixos /dev/sda1;
+mkfs.ext4 -L root /dev/sda1;
 mkswap -L swap /dev/sda3;
 
-mount /dev/disk/by-label/nixos /mnt;
+mount /dev/disk/by-label/root /mnt;
 mkdir -p /mnt/boot;
 mount /dev/disk/by-label/boot /mnt/boot;
 swapon /dev/disk/by-label/swap;
@@ -81,7 +81,7 @@ arch-chroot /mnt systemctl enable gnome-keyring;
 
 
 ########## Sound ##########
-arch-chroot /mnt pacmans -S --needed --noconfirm pipewire
+arch-chroot /mnt pacman -S --needed --noconfirm pipewire
 
 
 ########## Desktop ##########
@@ -141,4 +141,4 @@ arch-chroot /mnt echo -e "1234\n1234" | passwd mrs;
 echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/10-installer;
 
 ########## Finish ##########
-shutdown now;
+# shutdown now;
