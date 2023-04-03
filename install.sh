@@ -39,25 +39,12 @@ arch-chroot /mnt hwclock --systohc;
 
 
 ######### Locale Setup #########
-echo "LANG=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_ADDRESS=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_IDENTIFICATION=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_MEASUREMENT=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_MONETARY=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_NAME=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_NUMERIC=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_PAPER=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_TELEPHONE=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-echo "LC_TIME=de_DE.UTF-8" >> /mnt/etc/locale.conf;
-
-echo "KEYMAP=de" >> /mnt/etc/vconsole.conf;
-echo "FONT=" >> /mnt/etc/vconsole.conf;
-echo "FONT_MAP=" >> /mnt/etc/vconsole.conf;
-
-echo "# Autoinstaller" >> /mnt/etc/locale.gen;
-echo "de_DE.UTF-8 UTF-8" >> /mnt/etc/locale.gen;
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen;
+echo "de_DE.UTF-8 UTF-8" >> /mnt/etc/locale.gen;
 arch-chroot /mnt locale-gen;
+
+echo "LANG=de_DE.UTF-8" >> /mnt/etc/locale.conf;
+echo "KEYMAP=de-latin1" >> /mnt/etc/vconsole.conf;
 
 
 ########## Host Setup #########
@@ -119,7 +106,7 @@ git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git /mn
 
 mkdir -p /mnt/etc/skel/.config;
 arch-chroot /mnt bash <<SHELL
-starship preset tokyo-night > /etc/skel/.config/starship.toml;
+starship preset pastel-powerline > /etc/skel/.config/starship.toml;
 SHELL
 
 mkdir -p /mnt/etc/skel;
