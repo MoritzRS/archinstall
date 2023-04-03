@@ -26,15 +26,20 @@ mkdir -p /mnt/boot;
 mount /dev/disk/by-label/boot /mnt/boot;
 swapon /dev/disk/by-label/swap;
 
+lsblk;
+read -p "Press enter to continue";
 
 ########## Base Install #########
 pacstrap /mnt base base-devel linux linux-firmware;
 genfstab -U /mnt >> /mnt/etc/fstab;
 
+read -p "Press enter to continue";
 
 ########## Time Setup ##########
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime;
 arch-chroot /mnt hwclock --systohc;
+
+read -p "Press enter to continue";
 
 
 ######### Locale Setup #########
@@ -58,6 +63,8 @@ echo "de_DE.UTF-8 UTF-8" >> /mnt/etc/locale.gen;
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen;
 arch-chroot /mnt locale-gen;
 
+read -p "Press enter to continue";
+
 
 ########## Host Setup #########
 echo "archlinux" > /mnt/etc/hostname;
@@ -65,11 +72,15 @@ echo "127.0.0.1    localhost" >> /mnt/etc/hosts;
 echo "::1          localhost" >> /mnt/etc/hosts;
 echo "127.0.1.1    archlinux.localdomain    archlinux" >> /mnt/etc/hosts;
 
+read -p "Press enter to continue";
+
 
 ########## Bootloader Setup ##########
 arch-chroot /mnt pacman -S grub-efi-x86_64 efibootmgr dosfstools os-prober mtools --needed --noconfirm;
 arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck;
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg;
+
+read -p "Press enter to continue";
 
 
 ########## Services ##########
@@ -79,18 +90,26 @@ arch-chroot /mnt systemctl enable dhcpcd;
 arch-chroot /mnt systemctl enable acpid;
 arch-chroot /mnt systemctl enable gnome-keyring;
 
+read -p "Press enter to continue";
+
 
 ########## Sound ##########
 arch-chroot /mnt pacman -S --needed --noconfirm pipewire
+
+read -p "Press enter to continue";
 
 
 ########## Desktop ##########
 arch-chroot /mnt pacman -S --needed --noconfirm xorg-drivers gdm gnome-shell gnome-terminal gnome-control-center gnome-tweak-tool gnome-software gnome-calendar xdg-user-dirs nautilus;
 arch-chroot /mnt systemctl enable gdm;
 
+read -p "Press enter to continue";
+
 
 ########## Fonts ###########
 arch-chroot /mnt pacman -S --needed --noconfirm ttf-hack-nerd ttf-sourcecodepro-nerd ttf-terminus-nerd;
+
+read -p "Press enter to continue";
 
 
 ########## Shell ##########
@@ -113,6 +132,9 @@ echo "source /usr/local/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 echo "source /usr/local/zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> /mnt/etc/skel/.zshrc;
 echo "eval \"$(starship init zsh)\"" >> /mnt/etc/skel/.zshrc;
 
+read -p "Press enter to continue";
+
+
 ########## Tools ##########
 arch-chroot /mnt pacman -S --needed --noconfirm php php-sqlite git wget neovim docker flatpak xdg-desktop-portal-gnome;
 
@@ -130,6 +152,8 @@ chmod 777 ${NVM_DIR};
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 nvm install 18;
+
+read -p "Press enter to continue";
 
 
 ########## User ##########
