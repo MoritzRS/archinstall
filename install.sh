@@ -22,24 +22,20 @@ mkfs.ext4 -L root /dev/sda2;
 mkswap -L swap /dev/sda3;
 
 mount /dev/disk/by-label/root /mnt;
-mkdir -p /mnt/boot;
-mount /dev/disk/by-label/boot /mnt/boot;
+mkdir -p /mnt/{boot,home};
+mkdir -p /mnt/boot/efi;
+mount /dev/disk/by-label/boot /mnt/boot/efi;
 swapon /dev/disk/by-label/swap;
 
-lsblk;
-read -p "Press enter to continue";
 
 ########## Base Install #########
 pacstrap /mnt base base-devel linux linux-firmware;
 genfstab -U /mnt >> /mnt/etc/fstab;
 
-read -p "Press enter to continue";
 
 ########## Time Setup ##########
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime;
 arch-chroot /mnt hwclock --systohc;
-
-read -p "Press enter to continue";
 
 
 ######### Locale Setup #########
@@ -63,16 +59,12 @@ echo "de_DE.UTF-8 UTF-8" >> /mnt/etc/locale.gen;
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen;
 arch-chroot /mnt locale-gen;
 
-read -p "Press enter to continue";
-
 
 ########## Host Setup #########
 echo "archlinux" > /mnt/etc/hostname;
 echo "127.0.0.1    localhost" >> /mnt/etc/hosts;
 echo "::1          localhost" >> /mnt/etc/hosts;
 echo "127.0.1.1    archlinux.localdomain    archlinux" >> /mnt/etc/hosts;
-
-read -p "Press enter to continue";
 
 
 ########## Bootloader Setup ##########
