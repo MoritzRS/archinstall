@@ -78,7 +78,6 @@ arch-chroot /mnt pacman -S --needed --noconfirm networkmanager dhcpcd acpid gnom
 arch-chroot /mnt systemctl enable NetworkManager;
 arch-chroot /mnt systemctl enable dhcpcd;
 arch-chroot /mnt systemctl enable acpid;
-arch-chroot /mnt systemctl enable gnome-keyring;
 
 
 ########## Sound ##########
@@ -119,15 +118,17 @@ git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions /mnt/usr/lo
 git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git /mnt/usr/local/zsh-plugins/zsh-syntax-highlighting;
 
 mkdir -p /mnt/etc/skel/.config;
-arch-chroot /mnt starship preset tokyo-night > /etc/skel/.config/starship.toml;
+arch-chroot /mnt bash <<SHELL
+starship preset tokyo-night > /etc/skel/.config/starship.toml;
+SHELL
 
 mkdir -p /mnt/etc/skel;
 echo "HISTFILE=~/.zhistory" >> /mnt/etc/skel/.zshrc;
 echo "HISTSIZE=1000" >> /mnt/etc/skel/.zshrc;
 echo "SAVEHIST=1000" >> /mnt/etc/skel/.zshrc;
 echo "export NVM_DIR=\"/usr/local/nvm\"" >> /mnt/etc/skel/.zshrc;
-echo "[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"" >> /mnt/etc/skel/.zshrc;
-echo "[ -s \"$NVM_DIR/bash_completion\" ] && \. \"$NVM_DIR/bash_completion\"" >> /mnt/etc/skel/.zshrc;
+echo "[ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"" >> /mnt/etc/skel/.zshrc;
+echo "[ -s \"\$NVM_DIR/bash_completion\" ] && \. \"\$NVM_DIR/bash_completion\"" >> /mnt/etc/skel/.zshrc;
 echo "alias ls=\"ls --color=auto\"" >> /mnt/etc/skel/.zshrc;
 echo "source /usr/local/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> /mnt/etc/skel/.zshrc;
 echo "source /usr/local/zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> /mnt/etc/skel/.zshrc;
