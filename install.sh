@@ -61,12 +61,12 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg;
 
 
 ########## Services ##########
-arch-chroot /mnt pacman -S --needed --noconfirm networkmanager dhcpcd acpid gnome-keyring;
+arch-chroot /mnt pacman -S --needed --noconfirm networkmanager dhcpcd acpid gnome-keyring libsecret;
 arch-chroot /mnt systemctl enable NetworkManager;
 arch-chroot /mnt systemctl enable dhcpcd;
 arch-chroot /mnt systemctl enable acpid;
 arch-chroot /mnt systemctl enable fstrim.timer;
-
+echo "password	optional	pam_gnome_keyring.so" >> /mnt/etc/pam.d/passwd
 
 ########## Sound ##########
 arch-chroot /mnt pacman -S --needed --noconfirm pipewire
@@ -77,11 +77,13 @@ arch-chroot /mnt pacman -S --needed --noconfirm \
     xorg-drivers \
     gdm gnome-shell \
     gnome-backgrounds \
+    gnome-calculator \
     gnome-calendar \
     gnome-console \
     gnome-control-center \
     gnome-disk-utility \
     gnome-software \
+    gnome-software-packagekit-plugin \
     gnome-system-monitor \
     gnome-text-editor \
     gnome-tweak-tool \
@@ -93,6 +95,9 @@ arch-chroot /mnt pacman -S --needed --noconfirm \
     gvfs-mtp \
     gvfs-nfs \
     gvfs-smb \
+    evince \
+    gthumb \
+    seahorse \
     sushi \
     totem \
     xdg-user-dirs-gtk \

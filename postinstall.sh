@@ -7,6 +7,7 @@ passwd;
 ########## Setup git ##########
 git config --global user.name MoritzRS;
 git config --global user.email moritz.r.schulz@gmail.com;
+git config --global credential.helper /usr/lib/git-core/git-credential-libsecret;
 
 
 ########## Setup Gnome ##########
@@ -28,7 +29,7 @@ dconf write /org/gnome/desktop/background/picture-uri "'file:///usr/share/backgr
 dconf write /org/gnome/desktop/background/picture-uri-dark "'file:///usr/share/backgrounds/gnome/blobs-d.svg'";
 dconf write /org/gnome/desktop/screensaver/picture-uri "'file:///usr/share/backgrounds/gnome/blobs-d.svg'";
 
-dconf write /org/gnome/shell/favorite-apps "['com.google.Chrome.desktop', 'org.gnome.Epiphany.desktop', 'org.mozilla.firefox.desktop', 'md.obsidian.Obsidian.desktop', 'com.visualstudio.code-oss.desktop', 'org.gnome.Console.desktop', 'org.gnome.Nautilus.desktop', 'org.remmina.Remmina.desktop', 'org.gnome.Software.desktop', 'gnome-system-monitor.desktop']";
+dconf write /org/gnome/shell/favorite-apps "['com.google.Chrome.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Console.desktop', 'code-oss.desktop', 'org.gnome.Nautilus.desktop', 'obsidian.desktop', 'org.remmina.Remmina.desktop', 'org.gnome.Software.desktop', 'gnome-system-monitor.desktop']";
 
 ########## Update System ##########
 sudo pacman -Syyu;
@@ -43,18 +44,19 @@ rm -rf grub-themes;
 
 
 ########## Install Native Packages ##########
-sudo pacman -S --needed --noconfirm godot;
+sudo pacman -S --needed --noconfirm \
+    blender \
+    code \
+    epiphany \
+    firefox \
+    godot \
+    obsidian \
+    remmina \
+    sqlitebrowser;
 
 
 ########## Install Flatpaks ##########
-flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo;
-flatpak install -y --user flathub com.google.Chrome;
-flatpak install -y --user flathub org.mozilla.firefox;
-flatpak install -y --user flathub org.gnome.Epiphany;
-flatpak install -y --user flathub org.remmina.Remmina;
-flatpak install -y --user flathub org.blender.Blender;
-flatpak install -y --user flathub org.gnome.gitlab.somas.Apostrophe;
-flatpak install -y --user flathub md.obsidian.Obsidian;
-flatpak install -y --user flathub rest.insomnia.Insomnia;
-flatpak install -y --user flathub com.visualstudio.code-oss;
-flatpak install -y --user flathub org.sqlitebrowser.sqlitebrowser;
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo;
+flatpak install -y flathub com.google.Chrome;
+flatpak install -y flathub org.gnome.gitlab.somas.Apostrophe;
+flatpak install -y flathub rest.insomnia.Insomnia;
