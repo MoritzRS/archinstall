@@ -65,6 +65,7 @@ arch-chroot /mnt pacman -S --needed --noconfirm networkmanager dhcpcd acpid gnom
 arch-chroot /mnt systemctl enable NetworkManager;
 arch-chroot /mnt systemctl enable dhcpcd;
 arch-chroot /mnt systemctl enable acpid;
+arch-chroot /mnt systemctl enable fstrim.timer;
 
 
 ########## Sound ##########
