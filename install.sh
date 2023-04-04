@@ -72,7 +72,7 @@ arch-chroot /mnt pacman -S --needed --noconfirm pipewire
 
 
 ########## Desktop ##########
-arch-chroot /mnt pacman -S --needed --noconfirm xorg-drivers gdm gnome-shell gnome-backgrounds gnome-console gnome-control-center gnome-tweak-tool gnome-software gnome-calendar xdg-user-dirs nautilus;
+arch-chroot /mnt pacman -S --needed --noconfirm xorg-drivers gdm gnome-shell gnome-backgrounds gnome-console gnome-system-monitor gnome-control-center gnome-tweak-tool gnome-software gnome-calendar xdg-user-dirs nautilus;
 arch-chroot /mnt systemctl enable gdm;
 
 
