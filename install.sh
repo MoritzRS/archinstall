@@ -11,15 +11,15 @@ reflector \
 pacman -Syy --needed --noconfirm parted git wget unzip;
 
 ########## Disk Setup ##########
-parted /dev/sda -- mklabel gpt;
-parted /dev/sda -- mkpart ESP fat32 1MB 512MB;
-parted /dev/sda -- mkpart primary 512MB -20GB;
-parted /dev/sda -- mkpart primary linux-swap -20GB 100%;
-parted /dev/sda -- set 1 esp on;
+parted /dev/nvme0n1 -- mklabel gpt;
+parted /dev/nvme0n1 -- mkpart ESP fat32 1MB 512MB;
+parted /dev/nvme0n1 -- mkpart primary 512MB -20GB;
+parted /dev/nvme0n1 -- mkpart primary linux-swap -20GB 100%;
+parted /dev/nvme0n1 -- set 1 esp on;
 
-mkfs.fat -F 32 -n boot /dev/sda1;
-mkfs.ext4 -L root /dev/sda2;
-mkswap -L swap /dev/sda3;
+mkfs.fat -F 32 -n boot /dev/nvme0n1p1;
+mkfs.ext4 -L root /dev/nvme0n1p2;
+mkswap -L swap /dev/nvme0n1p3;
 
 mount /dev/disk/by-label/root /mnt;
 mkdir -p /mnt/{boot,home};
