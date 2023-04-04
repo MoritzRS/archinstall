@@ -43,6 +43,12 @@ cd ..;
 rm -rf grub-themes;
 
 
+########## Ensure proper Graphics Drivers ##########
+sudo pacman -S --needed --noconfirm \
+    vulkan-icd-loader \
+    vulkan-radeon \
+    mesa;
+
 ########## Install Native Packages ##########
 sudo pacman -S --needed --noconfirm \
     blender \
