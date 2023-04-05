@@ -57,7 +57,7 @@ sudo pacman -S --needed --noconfirm \
     firefox \
     godot \
     obsidian \
-    remmina \
+    remmina freerdp \
     sqlitebrowser;
 
 
