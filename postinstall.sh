@@ -58,7 +58,8 @@ sudo pacman -S --needed --noconfirm \
     godot \
     obsidian \
     remmina freerdp \
-    sqlitebrowser;
+    sqlitebrowser \
+    cloc;
 
 
 ########## Install Flatpaks ##########
