@@ -24,6 +24,7 @@ dconf write /org/gnome/desktop/interface/enable-hot-corners false;
 dconf write /org/gnome/desktop/interface/show-battery-percentage true;
 
 dconf write /org/gnome/desktop/input-sources/sources "[('xkb', 'de')]";
+dconf write /org/gnome/desktop/peripherals/touchpad/tap-to-click true;
 
 dconf write /org/gnome/desktop/session/idle-delay "uint32 0";
 dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type "'nothing'";
@@ -56,7 +57,7 @@ sudo pacman -S --needed --noconfirm python python-pip;
 
 
 ########## Install Node Version Manager ##########
-NVM_DIR="~/.nvm";
+NVM_DIR="$HOME/.nvm";
 git clone https://github.com/nvm-sh/nvm.git ${NVM_DIR};
 cd ${NVM_DIR};
 git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`;
@@ -80,10 +81,14 @@ cat <<EOF > ~/.zshrc
 HISTFILE=~/.zhistory
 HISTSIZE=1000
 SAVEHIST=1000
-export NVM_DIR="~/.nvm"
+
+export NVM_DIR="\$HOME/.nvm"
 [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
 [ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
+
 alias ls="ls --color=auto"
+alias code="flatpak run com.visualstudio.code"
+
 source ~/.zsh/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "\$(starship init zsh)"
@@ -107,3 +112,28 @@ flatpak install -y flathub md.obsidian.Obsidian;
 flatpak install -y flathub com.github.jeromerobert.pdfarranger;
 flatpak install -y flathub org.remmina.Remmina;
 flatpak install -y flathub org.onlyoffice.desktopeditors;
+
+
+########### Install VSCode Extensions ###########
+flatpak run com.visualstudio.code --install-extension esbenp.prettier-vscode;
+flatpak run com.visualstudio.code --install-extension svelte.svelte-vscode;
+flatpak run com.visualstudio.code --install-extension bradlc.vscode-tailwindcss;
+flatpak run com.visualstudio.code --install-extension ms-python.python;
+flatpak run com.visualstudio.code --install-extension ms-python.vscode-pylance;
+
+
+########### Enable VSCode to use Host System ##########
+mkdir -p ~/.var/app/com.visualstudio.code/config/Code/User;
+cat <<EOF > ~/.var/app/com.visualstudio.code/config/Code/User/settings.json
+{
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "/usr/bin/flatpak-spawn",
+      "args": ["--host", "--env=TERM=xterm-256color", "bash"]
+      "icon": "terminal-bash",
+      "overrideName": true
+    }
+  }
+}
+EOF
