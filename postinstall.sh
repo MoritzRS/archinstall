@@ -112,6 +112,7 @@ flatpak install -y flathub org.onlyoffice.desktopeditors;
 
 
 ########### Install VSCode Extensions ###########
+flatpak run com.visualstudio.code --install-extension eamodio.gitlens;
 flatpak run com.visualstudio.code --install-extension esbenp.prettier-vscode;
 flatpak run com.visualstudio.code --install-extension svelte.svelte-vscode;
 flatpak run com.visualstudio.code --install-extension bradlc.vscode-tailwindcss;
