@@ -105,7 +105,6 @@ flatpak install -y flathub rest.insomnia.Insomnia;
 flatpak install -y flathub com.visualstudio.code;
 flatpak install -y flathub org.sqlitebrowser.sqlitebrowser;
 flatpak install -y flathub org.filezillaproject.Filezilla;
-flatpak install -y flathub org.godotengine.Godot3;
 flatpak install -y flathub md.obsidian.Obsidian;
 flatpak install -y flathub com.github.jeromerobert.pdfarranger;
 flatpak install -y flathub org.remmina.Remmina;
