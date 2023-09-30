@@ -96,8 +96,6 @@ EOF
 
 
 ########## Install User Programs ##########
-sudo pacman -S --needed --noconfirm blender
-
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo;
 flatpak install -y flathub com.google.Chrome;
 flatpak install -y flathub org.mozilla.firefox;
