@@ -120,7 +120,13 @@ EOF
 
 
 ########## Fonts ###########
-arch-chroot /mnt pacman -S --needed --noconfirm ttf-hack-nerd ttf-sourcecodepro-nerd ttf-terminus-nerd;
+arch-chroot /mnt pacman -S --needed --noconfirm \
+    noto-fonts \
+    noto-fonts-cjk \
+    noto-fonts-emoji \
+    ttf-hack-nerd \
+    ttf-sourcecodepro-nerd \
+    ttf-terminus-nerd;
 
 
 ########## Tools ##########
