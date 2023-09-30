@@ -51,6 +51,10 @@ sudo pacman -S --needed --noconfirm \
     mesa;
 
 
+########## Install Python ###########
+sudo pacman -S --needed --noconfirm python python-pip;
+
+
 ########## Install Node Version Manager ##########
 NVM_DIR="~/.nvm";
 git clone https://github.com/nvm-sh/nvm.git ${NVM_DIR};
@@ -87,6 +91,8 @@ EOF
 
 
 ########## Install User Programs ##########
+sudo pacman -S --needed --noconfirm blender
+
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo;
 flatpak install -y flathub com.google.Chrome;
 flatpak install -y flathub org.mozilla.firefox;
