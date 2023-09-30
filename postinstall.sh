@@ -65,3 +65,4 @@ flatpak install -y flathub org.godotengine.Godot3;
 flatpak install -y flathub md.obsidian.Obsidian;
 flatpak install -y flathub com.github.jeromerobert.pdfarranger;
 flatpak install -y flathub org.remmina.Remmina;
+flatpak install -y flathub org.onlyoffice.desktopeditors
