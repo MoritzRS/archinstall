@@ -36,6 +36,7 @@ dconf write /org/gnome/desktop/screensaver/picture-uri "'file:///usr/share/backg
 
 dconf write /org/gnome/shell/favorite-apps "['com.google.Chrome.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Console.desktop', 'com.visualstudio.code.desktop', 'org.gnome.Nautilus.desktop', 'md.obsidian.Obsidian.desktop', 'org.remmina.Remmina.desktop', 'org.gnome.Software.desktop', 'gnome-system-monitor.desktop']";
 
+dconf write /org/gnome/Console/font-scale 1.2;
 
 ########## Install Grub Theme ##########
 git clone --depth=1 https://github.com/vinceliuice/grub2-themes grub-themes;
