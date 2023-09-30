@@ -120,12 +120,15 @@ flatpak run com.visualstudio.code --install-extension svelte.svelte-vscode;
 flatpak run com.visualstudio.code --install-extension bradlc.vscode-tailwindcss;
 flatpak run com.visualstudio.code --install-extension ms-python.python;
 flatpak run com.visualstudio.code --install-extension ms-python.vscode-pylance;
+flatpak run com.visualstudio.code --install-extension zhuangtongfa.Material-theme;
 
 
-########### Enable VSCode to use Host System ##########
+########### Setup VS-Code Default Settings ##########
 mkdir -p ~/.var/app/com.visualstudio.code/config/Code/User;
 cat <<EOF > ~/.var/app/com.visualstudio.code/config/Code/User/settings.json
 {
+  "window.zoomLevel": 1,
+  "workbench.colorTheme": "One Dark Pro Darker",
   "terminal.integrated.defaultProfile.linux": "bash",
   "terminal.integrated.profiles.linux": {
     "bash": {
