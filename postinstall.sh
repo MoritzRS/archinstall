@@ -21,15 +21,11 @@ dconf write /org/gnome/desktop/session/idle-delay "uint32 0";
 dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type "'nothing'";
 dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type "'nothing'";
 
-# dconf write /org/gnome/desktop/interface/font-name "'JetBrainsMono Nerd Font 11'";
-# dconf write /org/gnome/desktop/interface/monospace-font-name "'JetBrainsMono Nerd Font Mono 10'";
-# dconf write /org/gnome/desktop/interface/document-font-name "'JetBrainsMono Nerd Font 11'";
-
 dconf write /org/gnome/desktop/background/picture-uri "'file:///usr/share/backgrounds/gnome/blobs-l.svg'";
 dconf write /org/gnome/desktop/background/picture-uri-dark "'file:///usr/share/backgrounds/gnome/blobs-d.svg'";
 dconf write /org/gnome/desktop/screensaver/picture-uri "'file:///usr/share/backgrounds/gnome/blobs-d.svg'";
 
-dconf write /org/gnome/shell/favorite-apps "['com.google.Chrome.desktop', 'firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Console.desktop', 'code-oss.desktop', 'org.gnome.Nautilus.desktop', 'obsidian.desktop', 'org.remmina.Remmina.desktop', 'org.gnome.Software.desktop', 'gnome-system-monitor.desktop']";
+dconf write /org/gnome/shell/favorite-apps "['com.google.Chrome.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Console.desktop', 'com.visualstudio.code.desktop', 'org.gnome.Nautilus.desktop', 'md.obsidian.Obsidian.desktop', 'org.remmina.Remmina.desktop', 'org.gnome.Software.desktop', 'gnome-system-monitor.desktop']";
 
 ########## Update System ##########
 sudo pacman -Syyu;
@@ -52,18 +48,20 @@ sudo pacman -S --needed --noconfirm \
 ########## Install Native Packages ##########
 sudo pacman -S --needed --noconfirm \
     blender \
-    code \
-    epiphany \
-    firefox \
-    godot \
-    obsidian \
-    remmina freerdp \
-    sqlitebrowser \
     cloc;
 
 
 ########## Install Flatpaks ##########
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo;
 flatpak install -y flathub com.google.Chrome;
+flatpak install -y flathub org.mozilla.firefox;
+flatpak install -y flathub org.gnome.Epiphany;
 flatpak install -y flathub org.gnome.gitlab.somas.Apostrophe;
 flatpak install -y flathub rest.insomnia.Insomnia;
+flatpak install -y flathub com.visualstudio.code;
+flatpak install -y flathub org.sqlitebrowser.sqlitebrowser;
+flatpak install -y flathub org.filezillaproject.Filezilla;
+flatpak install -y flathub org.godotengine.Godot3;
+flatpak install -y flathub md.obsidian.Obsidian;
+flatpak install -y flathub com.github.jeromerobert.pdfarranger;
+flatpak install -y flathub org.remmina.Remmina;
