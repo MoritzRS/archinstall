@@ -85,7 +85,6 @@ arch-chroot /mnt pacman -S --needed --noconfirm \
     gnome-control-center \
     gnome-disk-utility \
     gnome-software \
-    gnome-software-packagekit-plugin \
     gnome-system-monitor \
     gnome-text-editor \
     gnome-tweak-tool \
