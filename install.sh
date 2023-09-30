@@ -49,7 +49,7 @@ echo "KEYMAP=de-latin1" >> /mnt/etc/vconsole.conf;
 
 ########## Host Setup #########
 echo "archlinux" > /mnt/etc/hostname;
-cat <<EOF >> /mnt/etc/hosts
+cat <<EOF > /mnt/etc/hosts
 127.0.0.1    localhost
 ::1          localhost
 127.0.1.1    archlinux.localdomain    archlinux
@@ -103,12 +103,14 @@ arch-chroot /mnt pacman -S --needed --noconfirm \
     sushi \
     totem \
     xdg-user-dirs-gtk \
-    nautilus;
+    nautilus \
+    flatpak \
+    xdg-desktop-portal-gnome;
 arch-chroot /mnt systemctl enable gdm;
 
 
 ########## Touchpad ##########
-cat <<EOF >> /mnt/etc/X11/xorg.conf.d/30-touchpad.conf
+cat <<EOF > /mnt/etc/X11/xorg.conf.d/30-touchpad.conf
 Section "InputClass"
     Identifier "touchpad"
     Driver "libinput"
@@ -129,55 +131,11 @@ arch-chroot /mnt pacman -S --needed --noconfirm \
     ttf-terminus-nerd;
 
 
-########## Tools ##########
-arch-chroot /mnt pacman -S --needed --noconfirm php php-sqlite git wget neovim podman flatpak xdg-desktop-portal-gnome;
-
-# PHP
-sed -i s/\;extension=pdo_sqlite/extension=pdo_sqlite/ /mnt/etc/php/php.ini
-sed -i s/\;extension=sqlite3/extension=sqlite3/ /mnt/etc/php/php.ini
-
-# NVM
-NVM_DIR="/mnt/usr/local/nvm";
-git clone https://github.com/nvm-sh/nvm.git ${NVM_DIR};
-cd ${NVM_DIR};
-git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`;
-\. ${NVM_DIR}/nvm.sh;
-chmod 777 ${NVM_DIR};
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-nvm install 18;
-
-
-########## Shell ##########
-arch-chroot /mnt pacman -S --needed --noconfirm zsh starship;
-git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions /mnt/usr/local/zsh-plugins/zsh-autosuggestions;
-git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git /mnt/usr/local/zsh-plugins/zsh-syntax-highlighting;
-
-mkdir -p /mnt/etc/skel/.config;
-arch-chroot /mnt bash <<SHELL
-starship preset pastel-powerline > /etc/skel/.config/starship.toml;
-SHELL
-
-mkdir -p /mnt/etc/skel;
-cat <<EOF >> /mnt/etc/skel/.zshrc
-HISTFILE=~/.zhistory
-HISTSIZE=1000
-SAVEHIST=1000
-export NVM_DIR="/usr/local/nvm"
-[ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
-[ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
-alias ls="ls --color=auto"
-source /usr/local/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/local/zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-eval "\$(starship init zsh)"
-EOF
-
-
 ########## User ##########
 mkdir -p /mnt/etc/skel/{Bilder,Dev,Dokumente,Downloads,Musik,Videos}
 arch-chroot /mnt bash <<SHELL
 pacman -S --needed --noconfirm sudo;
-useradd -m -g users -G wheel,storage,disk,power,audio,video -s /usr/bin/zsh mrs;
+useradd -m -g users -G wheel,storage,disk,power,audio,video mrs;
 usermod -c "MoritzRS" mrs;
 echo -e "1234\n1234" | passwd;
 echo -e "1234\n1234" | passwd mrs;
